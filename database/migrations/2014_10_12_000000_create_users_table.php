@@ -23,7 +23,6 @@ class CreateUsersTable extends Migration
             $table->string('avatar')->default('default.jpg');
             $table->rememberToken();
             $table->timestamps();
-            // $table->foreignId('room_id')->constrained('rooms');
         });
     }
 
