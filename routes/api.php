@@ -18,3 +18,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
+Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
+Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
