@@ -18,5 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource("/products",ProductController::class);
-
-Route::get("/testapi",function(){ return"I am called";});
+Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
+Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
+Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
