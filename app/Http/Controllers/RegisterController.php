@@ -15,7 +15,7 @@ class RegisterController extends Controller
             'email' => ['required', 'email', 'unique:users'],
             'password'=>['required', 'min:8', 'confirmed'],
             'avatar' => ['required'],
-            'room_no' => ['required']
+            'room_id' => ['required']
         ]);
 
         User::create([
