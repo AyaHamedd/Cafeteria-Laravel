@@ -26,5 +26,5 @@ class OrderProduct extends Pivot
      * @var array
      */
     protected $fillable = ['order_id','product_id','quantity'];
-
+    public $timestamps = false;
 }
