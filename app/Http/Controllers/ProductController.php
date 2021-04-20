@@ -15,7 +15,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products=Product::all();
+        $products=Product::where('is_available', 1)->paginate();
         return ProductResource::collection($products);
     }
 
