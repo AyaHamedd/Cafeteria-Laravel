@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProduct;
-
+use App\Http\Resources\OrderResource;
 class OrderController extends Controller
 {
     public function inject_order($id, $products)
@@ -18,6 +18,7 @@ class OrderController extends Controller
         return $order_products;
     }
 
+
     /**
      * Display a listing of the resource.
      *
@@ -25,6 +26,8 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $order = Order::where('status', 'processing')->get();
+        return OrderResource::collection($order);
     }
 
     /**
