@@ -6,6 +6,8 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\ImageController;
 
+ 
+ 
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,5 +24,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 // Route::Resource('pages', 'App\Http\Controllers\AdminController');
 Route::resource('pages', App\Http\Controllers\AdminController::class); 
- Route::resource('rooms', App\Http\Controllers\RoomController::class); 
- Route::post('/upload', [App\Http\Controllers\ImageController::class, 'upload'])->name('upload');
+Route::resource('rooms', App\Http\Controllers\RoomController::class); 
+
+Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
+
+ 
