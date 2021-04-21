@@ -15,7 +15,12 @@ class LoginController extends Controller
         ]);
         
         if(Auth::attempt($request->only('email', 'password'))){
-            return response()->json(Auth::user(), 200);
+            $user = Auth::user();
+            $token = $user->CreateToken('token')->plainTextToken;
+            $cookie = \cookie('jwt', $token, 60*24);
+            return \response([
+                'jwt'=>$token
+            ])->withCookie($cookie);
         }
 
         throw ValidationException::withMessages([
