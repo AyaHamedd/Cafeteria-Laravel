@@ -44,12 +44,14 @@ class LoginController extends Controller
     // Google login
     public function redirectToGoogle()
     {
+        // dd("test google login");
         return Socialite::driver('google')->redirect();
     }
 
     // Google callback
     public function handleGoogleCallback()
     {
+        // dd("test google callback");
         $user = Socialite::driver('google')->user();
 
         $this->_registerOrLoginUser($user);
