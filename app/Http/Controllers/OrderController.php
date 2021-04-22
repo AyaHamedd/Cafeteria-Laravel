@@ -5,19 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProduct;
+use App\Http\Resources\ProductResource;
 
 class OrderController extends Controller
 {
-    public function inject_order($id, $products)
-    {
-        $order_products = array();
-        foreach ($products as $product) {
-            $product['order_id'] = $id;
-            $order_products[] = $product;
-        }
-        return $order_products;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -82,5 +73,11 @@ class OrderController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function latest_order($id)
+    {
+        $order = Order::where('user_id',$id)->orderBy('created_at', 'DESC')->first();
+        return ProductResource::collection($order->products->take(5));
     }
 }
