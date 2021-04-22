@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 Route::apiResource("/products",ProductController::class);
 Route::apiResource("/orders",OrderController::class);
+Route::apiResource("/users",UserController::class);
 Route::get('/orders/latest_order/{id}', [OrderController::class,'latest_order']);
 
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
