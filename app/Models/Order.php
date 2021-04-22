@@ -30,4 +30,13 @@ class Order extends Model
     {
         return $this->belongsToMany(Product::class,'order_product')->withPivot('quantity');
     }
+
+    public function getTotalOrderPrice(){
+        $order_products = $this->find($this->id)->products;
+        $total_order_price = 0;
+        foreach($order_products as $order_product){
+            $total_order_price += $order_product->pivot->quantity * $order_product->price;
+        }
+        return $total_order_price;
+    }
 }

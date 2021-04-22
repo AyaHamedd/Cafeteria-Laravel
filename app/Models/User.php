@@ -52,4 +52,8 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function getTotalOrdersPrice(){
+        return $this->find($this->id);
+    }
 }
