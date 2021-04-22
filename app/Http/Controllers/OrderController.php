@@ -85,7 +85,7 @@ class OrderController extends Controller
     }
 
     public function orderPrice($id){
-        $total_price = Order::find($id)->totalOrderPrice();
+        $total_price = Order::find($id)->getTotalOrderPrice();
         return $total_price;
     }
 }
