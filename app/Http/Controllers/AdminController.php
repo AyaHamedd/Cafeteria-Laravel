@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
 
@@ -44,12 +45,25 @@ class AdminController extends Controller
   
     public function store(Request $request)
     {
-        
+        // $request->validate([
+        //     'name' => ['required'], 
+        //     'email' => ['required', 'email', 'unique:users'],
+        //     'password'=>['required', 'min:8', 'confirmed'],
+        //     'avatar' => ['required'],
+        //     'room_id' => ['required']
+        // ]);
+        //      User::create([
+        //     'name' => $request->name,
+        //     'email' => $request->email,
+        //     'password'=>Hash::make($request->password),
+        //     'avatar' => $request->avatar,
+        //     'room_id' => $request->room_id
+        // ]);
       
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->password = $request->password;
+        $user->password =Hash::make($request->password);
         $user->avatar = $request->avatar;
         $user->room_id=$request->room_id;
         $user->save();
