@@ -102,12 +102,21 @@ dd($add);
      */
  public function update($id, Request $req)
     {
+
+
       
         $user = User::find($id);
+    $input = $user->all();  
+if ($image = $user->file('avatar')) {
+    $destinationPath = 'storage/avatars/';
+    $profileImage = 'storage/avatars/'.$user->file('avatar')->getClientOriginalName(); 
+    $image->move($destinationPath, $profileImage);
+    $input['avatar'] = "$profileImage";
+}
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = $req->password;
-        $user->avatar = $req->avatar;
+        $user->avatar = $input['avatar'];
         $user->room_id = $req->room_id;
         $user->save();
         return response()->json('user updated');
