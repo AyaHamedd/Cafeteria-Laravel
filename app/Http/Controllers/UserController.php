@@ -66,7 +66,7 @@ class UserController extends Controller
 
     public function usernames()
     {
-        $users = User::all();
+        $users = User::where('is_admin',0)->get();
         return UserResource::collection($users);
     }
 }
