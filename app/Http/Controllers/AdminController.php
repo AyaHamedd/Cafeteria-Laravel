@@ -46,30 +46,31 @@ class AdminController extends Controller
     {
         
       
-        // $user = new User();
-        // $user->name = $request->name;
-        // $user->email = $request->email;
-        // $user->password = $request->password;
-        // $user->avatar = $request->avatar;
-        // $user->room_id=$request->room_id;
-        // $user->save();
-$input = $request->all();  
-if ($image = $request->file('avatar')) {
-    $destinationPath = 'storage/avatars/';
-    $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
-    $image->move($destinationPath, $profileImage);
-    $input['avatar'] = "$profileImage";
-}
+        $user = new User();
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->password = $request->password;
+        $user->avatar = $request->avatar;
+        $user->room_id=$request->room_id;
+        $user->save();
+// $input = $request->all();  
+// if ($image = $request->file('avatar')) {
+//     $destinationPath = 'storage/avatars/';
+//     $profileImage = 'storage/avatars/'.$request->file('avatar')->getClientOriginalName(); 
+//     $image->move($destinationPath, $profileImage);
+//     $input['avatar'] = "$profileImage";
+// }
 
-$add = User::create($input);
-dd($add);
-  if ($add){
-    return response()->json(["is_done"=>true]);
-  }else{
-    return response()->json(["is_done"=>false]);
+// $add = User::create($input);
+// dd($add);
+//   if ($add){
+//     return response()->json(["is_done"=>true]);
+//   }else{
+//     return response()->json(["is_done"=>false]);
 
     
-    }}
+//     }
+}
 
     /**
      * Display the specified resource.
@@ -106,17 +107,17 @@ dd($add);
 
       
         $user = User::find($id);
-    $input = $user->all();  
-if ($image = $user->file('avatar')) {
-    $destinationPath = 'storage/avatars/';
-    $profileImage = 'storage/avatars/'.$user->file('avatar')->getClientOriginalName(); 
-    $image->move($destinationPath, $profileImage);
-    $input['avatar'] = "$profileImage";
-}
+//     $input = $user->all();  
+// if ($image = $user->file('avatar')) {
+//     $destinationPath = 'storage/avatars/';
+//     $profileImage = 'storage/avatars/'.$user->file('avatar')->getClientOriginalName(); 
+//     $image->move($destinationPath, $profileImage);
+//     $input['avatar'] = "$profileImage";
+// }
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = $req->password;
-        $user->avatar = $input['avatar'];
+        $user->avatar = $req->avatar;
         $user->room_id = $req->room_id;
         $user->save();
         return response()->json('user updated');
