@@ -3,12 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Order;
-use App\Models\OrderProduct;
-use App\Http\Resources\ProductResource;
-use App\Http\Resources\UserOrdersResource;
+use App\Models\User;
+use App\Http\Resources\UserResource;
 
-class OrderController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +15,8 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $users = User::all();
+        return UserResource::collection($users);
     }
 
     /**
@@ -27,20 +27,8 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $order = $request->input('order');
-        $newOrder = Order::create($order);
-
-        $products = $request->input('products');
-
-        $order_products = array();
-        foreach ($products as $product) {
-            $product['order_id'] = $newOrder->id;
-            $order_products[] = $product;
-        }
-        $newProducts = OrderProduct::insert($order_products);
-        return $newProducts;
+        //
     }
-
 
     /**
      * Display the specified resource.
@@ -76,15 +64,9 @@ class OrderController extends Controller
         //
     }
 
-    public function latest_order($id)
+    public function usernames()
     {
-        $order = Order::where('user_id',$id)->orderBy('created_at', 'DESC')->first();
-        return ProductResource::collection($order->products->take(5));
-    }
-
-    public function user_orders(Request $request,$id)
-    {
-        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
-        return UserOrdersResource::collection($orders);
+        $users = User::where('is_admin',0)->get();
+        return UserResource::collection($users);
     }
 }
