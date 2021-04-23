@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Requests;
- 
 use Illuminate\Foundation\Http\FormRequest;
 
 class ImageUploadRequest extends FormRequest
@@ -24,8 +23,6 @@ class ImageUploadRequest extends FormRequest
     public function rules()
     {
         return [
-            //
-
             'avatar'=>'required|mimes:jpg,jpeg,png'
         ];
     }

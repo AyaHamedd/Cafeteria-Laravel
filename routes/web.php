@@ -18,5 +18,3 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-// // Route::resource('pages', 'AdminController');
-// Route::post('upload', App\Http\Controllers\ImageController::class);
