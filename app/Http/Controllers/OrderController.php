@@ -26,7 +26,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $order = Order::where('status', 'processing')->with('room','user')->get();
+        $order = Order::where('status', 'processing')->with('room','user','products')->get();
         return OrderResource::collection($order);
     }
 
