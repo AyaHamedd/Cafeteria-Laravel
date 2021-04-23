@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\OrderProduct;
+use App\Http\Resources\OrderPriceResource;
+use App\Http\Resources\OrderProductsResource;
 
 class OrderController extends Controller
 {
@@ -103,7 +105,7 @@ class OrderController extends Controller
             }
             return ['id'=>$selectedUser->id, 'user'=>$selectedUser->name, 'total_orders_price'=>$totalUserOrdersPrice];
         }
-        return [];
+        return;
     }
 
     public function searchOrderUsersByDate(Request $request){
@@ -115,10 +117,30 @@ class OrderController extends Controller
             $allUsers = User::all();
             $usersPrices = [];
             foreach($allUsers as $user){
-                $oneUserPrice = $this->userTotalPrice($user->id, $request->date_from, $request->date_to);
-                array_push($usersPrices, $oneUserPrice);
+                if($user->is_admin !== 1){
+                    $oneUserPrice = $this->userTotalPrice($user->id, $request->date_from, $request->date_to);
+                    if($oneUserPrice !== null){
+                        array_push($usersPrices, $oneUserPrice);
+                    }
+                }
             }
             return $usersPrices;
         }
+    }
+
+    public function searchOrdersByDate(Request $request, $userId){
+        $selectedUser = User::find($userId);
+        $selectedUserOrders = $selectedUser->orders
+        ->where('created_at','>',$request->dateFrom)
+        ->where('created_at','<',$request->dateTo);
+        return OrderPriceResource::collection($selectedUserOrders);
+        return ['id'=>$selectedUserOrders->id, 
+        'created_at'=>$selectedUserOrders->created_at, 
+        'order_price'=>$selectedUserOrders->getTotalOrderPrice()];
+    }
+
+    public function getOrderProducts($orderId){
+        $orderProducts = Order::find($orderId)->products;
+        return OrderProductsResource::collection($orderProducts);
     }
 }
