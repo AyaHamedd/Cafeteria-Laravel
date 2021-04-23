@@ -22,8 +22,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource("/products",ProductController::class);
 Route::apiResource("/orders",OrderController::class);
 Route::get("/orders/price/{order}", [OrderController::class,'orderPrice']);
+Route::post("/orders/search", [OrderController::class,'searchOrderUsersByDate']);
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
 Route::get('/users/{user}', [App\Http\Controllers\UserController::class,'userOrdersPrice']);
+Route::get('/users', [App\Http\Controllers\UserController::class,'index']);
 Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
 Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 Route::post('/login', [App\Http\Controllers\LoginController::class,'login']);
