@@ -3,27 +3,16 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; 
+use Illuminate\Support\Str;
+use App\Http\Requests\ImageUploadRequest;
+
 class ImageController extends Controller
 {
-    //
-public function upload(Request $request){
-            
-            $request->validate([
-               'file' => 'required|mimes:jpg,jpeg,png,csv,txt,xlx,xls,pdf|max:2048'
-            ]);
-    
-            $fileUpload = new User;
-    
-            if($request->file()) {
-                $file_name = time().'_'.$request->file->getClientOriginalName();
-                $file_path = $request->file('file')->storeAs('uploads', $file_name, 'public');
-    
-                // $fileUpload->name = time().'_'.$request->file->getClientOriginalName();
-                $fileUpload->avatar = '/storage/' . $file_path;
-                $fileUpload->save();
-    
-                return response()->json(['success'=>'File uploaded successfully.']);
-            }
-       }
+    public function upload(ImageUploadRequest $request){
+        $file = $request->file('avatar');
+        $name = Str::random(10);
+        $url = \Storage::putFileAs('images', $file, $name.'.'.$file->extension());
+
+        return ['url'=>env('APP_URL').'/'.$url];
+    }
 }

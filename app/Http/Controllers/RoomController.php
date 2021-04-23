@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Room;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-
-use App\Models\Room; 
 
 class RoomController extends Controller
 {
@@ -16,14 +14,9 @@ class RoomController extends Controller
      */
     public function index()
     {
-        //
-          $rooms=Room::all();
-        // return response()->json( $rooms);
-         return $rooms;
-
+        $rooms = Room::all();
+        return $rooms;
     }
-
-    
 
     /**
      * Show the form for creating a new resource.
@@ -53,9 +46,14 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
-    }
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function show(Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
@@ -64,9 +62,14 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
-        //
-    }
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function edit(Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
@@ -76,9 +79,14 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
-    }
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function update(Request $request, Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
@@ -87,7 +95,12 @@ class RoomController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {
-        //
-    }
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function destroy(Room $room)
+    // {
+    //     //
+    // }
 }
