@@ -37,7 +37,7 @@ class Order extends Model
      *
      * @var array
      */
-    protected $fillable = ['user_id','room_id','notes'];
+    protected $fillable = ['user_id', 'room_id', 'notes'];
 
 
     public function user()
@@ -52,6 +52,16 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class,'order_product')->withPivot('quantity');
+        return $this->belongsToMany(Product::class, 'order_product')->withPivot('quantity');
+    }
+
+    public function getTotalOrderPrice()
+    {
+        $order_products = $this->find($this->id)->products;
+        $total_order_price = 0;
+        foreach ($order_products as $order_product) {
+            $total_order_price += $order_product->pivot->quantity * $order_product->price;
+        }
+        return $total_order_price;
     }
 }
