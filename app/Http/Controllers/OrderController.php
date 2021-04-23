@@ -10,16 +10,6 @@ use App\Http\Resources\UserOrdersResource;
 
 class OrderController extends Controller
 {
-    public function inject_order($id, $products)
-    {
-        $order_products = array();
-        foreach ($products as $product) {
-            $product['order_id'] = $id;
-            $order_products[] = $product;
-        }
-        return $order_products;
-    }
-
     /**
      * Display a listing of the resource.
      *
