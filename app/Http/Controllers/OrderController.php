@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\UserOrdersResource;
 
 class OrderController extends Controller
 {
@@ -79,5 +80,11 @@ class OrderController extends Controller
     {
         $order = Order::where('user_id',$id)->orderBy('created_at', 'DESC')->first();
         return ProductResource::collection($order->products->take(5));
+    }
+
+    public function user_orders(Request $request,$id)
+    {
+        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
+        return UserOrdersResource::collection($orders);
     }
 }
