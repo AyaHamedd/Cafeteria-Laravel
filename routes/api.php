@@ -19,7 +19,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource("/products",ProductController::class);
-Route::get("/orders",[App\Http\Controllers\OrderController::class,'index']);
+// Route::get("/orders",[App\Http\Controllers\OrderController::class,'index']);
+Route::apiResource("/orders",OrderController::class);
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
 Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
 Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
