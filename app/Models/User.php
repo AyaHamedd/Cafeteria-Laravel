@@ -6,6 +6,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * App\Models\User
@@ -42,23 +43,26 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRoomId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens;
 
+    protected $guarded = [];
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'avatar',
-        'room_id',
-    ];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    //     'avatar',
+    //     'room_id',
+    // ];
 
     /**
      * The attributes that should be hidden for arrays.
@@ -87,5 +91,14 @@ class User extends Authenticatable
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function getTotalUserOrdersPrice(){
+        $user_orders = $this->find($this->id)->orders;
+        $totalUserOrdersPrice = 0;
+        foreach($user_orders as $user_order){
+            $totalUserOrdersPrice += $user_order->getTotalOrderPrice();
+        }
+        return $totalUserOrdersPrice;
     }
 }

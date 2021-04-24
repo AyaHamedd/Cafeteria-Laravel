@@ -42,45 +42,65 @@ class RoomController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Room  $room
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(Room $room)
-    {
-        //
-    }
+    public function show($id)
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function show(Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Room  $room
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Room $room)
-    {
-        //
-    }
+    public function edit($id)
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function edit(Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Room  $room
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Room $room)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function update(Request $request, Room $room)
+    // {
+    //     //
+    // }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Room  $room
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Room $room)
-    {
-        //
-    }
+    public function destroy($id)
+    {}
+     /* @param  \App\Models\Room  $room
+     * @return \Illuminate\Http\Response
+     */
+    // public function destroy(Room $room)
+    // {
+    //     //
+    // }
 }
