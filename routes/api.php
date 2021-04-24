@@ -30,12 +30,20 @@ Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 // Route::resource('rooms', App\Http\Controllers\RoomController::class); 
 Route::post('/upload', [App\Http\Controllers\ImageController::class, 'upload'])->name('upload');
 Route::apiResource("/products",ProductController::class);
+
 Route::apiResource("/orders",OrderController::class);
+Route::get("/orders/price/{order}", [OrderController::class,'orderPrice']);
+Route::post("/orders/search-users", [OrderController::class,'searchOrderUsersByDate']);
+Route::get("/orders/search-orders/{user_id}", [OrderController::class,'searchOrdersByDate']);
+Route::get("/orders/{order_id}/products", [OrderController::class,'getOrderProducts']);
+
 Route::apiResource("/users",UserController::class);
 Route::get("/usernames",[UserController::class,'usernames']);
 Route::get('/orders/latest_order/{id}', [OrderController::class,'latest_order']);
 Route::get('/orders/user/{id}', [OrderController::class,'user_orders']);
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
+Route::get('/users/{user}', [App\Http\Controllers\UserController::class,'userOrdersPrice']);
+Route::get('/users', [App\Http\Controllers\UserController::class,'index']);
 Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
 Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 Route::post('/login', [App\Http\Controllers\LoginController::class,'login']);

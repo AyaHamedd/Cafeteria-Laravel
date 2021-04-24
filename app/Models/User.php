@@ -92,4 +92,13 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Room::class);
     }
+
+    public function getTotalUserOrdersPrice(){
+        $user_orders = $this->find($this->id)->orders;
+        $totalUserOrdersPrice = 0;
+        foreach($user_orders as $user_order){
+            $totalUserOrdersPrice += $user_order->getTotalOrderPrice();
+        }
+        return $totalUserOrdersPrice;
+    }
 }
