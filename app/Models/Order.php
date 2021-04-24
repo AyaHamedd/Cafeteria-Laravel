@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Carbon;
 /**
  * App\Models\Order
  *
@@ -53,6 +53,11 @@ class Order extends Model
     public function products()
     {
         return $this->belongsToMany(Product::class,'order_product')->withPivot('quantity');
+    }
+
+    public function getCreatedAtAttribute()
+    {
+        return Carbon::parse($this->attributes['created_at'])->format('Y-m-d H:i A');
     }
 
     public function getTotalOrderPrice(){
