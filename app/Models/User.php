@@ -43,6 +43,8 @@ use Laravel\Sanctum\HasApiTokens;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereRoomId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Laravel\Sanctum\PersonalAccessToken[] $tokens
+ * @property-read int|null $tokens_count
  */
 class User extends Authenticatable
 {
@@ -89,5 +91,14 @@ class User extends Authenticatable
     public function room()
     {
         return $this->belongsTo(Room::class);
+    }
+
+    public function getTotalUserOrdersPrice(){
+        $user_orders = $this->find($this->id)->orders;
+        $totalUserOrdersPrice = 0;
+        foreach($user_orders as $user_order){
+            $totalUserOrdersPrice += $user_order->getTotalOrderPrice();
+        }
+        return $totalUserOrdersPrice;
     }
 }
