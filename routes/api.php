@@ -19,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource("/products",ProductController::class);
+Route::apiResource('/category', 'App\Http\Controllers\CategoyController');
+Route::get('categoryLookup', [\App\Http\Controllers\CategoyController::class, 'lookUp']);
 Route::apiResource("/orders",OrderController::class);
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
 Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
