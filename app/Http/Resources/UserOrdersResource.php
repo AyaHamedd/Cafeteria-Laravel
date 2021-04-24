@@ -15,6 +15,7 @@ class UserOrdersResource extends JsonResource
     public function toArray($request)
     {
         return [
+            "id" => $this->id,
             "created_at" => $this->created_at,
             "status" => $this->status,
             "total" => $this->getTotalOrderPrice()

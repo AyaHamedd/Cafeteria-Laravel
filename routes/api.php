@@ -24,6 +24,7 @@ Route::apiResource("/orders",OrderController::class);
 Route::apiResource("/users",UserController::class);
 Route::get("/usernames",[UserController::class,'usernames']);
 Route::get('/orders/latest_order/{id}', [OrderController::class,'latest_order']);
+Route::get('/orders/products/{id}', [OrderController::class,'getOrderProducts']);
 Route::get('/orders/user/{id}', [OrderController::class,'user_orders']);
 Route::post('/register', [App\Http\Controllers\RegisterController::class,'register']);
 Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);

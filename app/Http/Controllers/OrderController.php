@@ -73,7 +73,14 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroyedOrder = Order::find($id)->delete();
+        if ($destroyedOrder) {
+            return response('Order Deleted successfully', 200)
+                  ->header('Content-Type', 'text/plain');
+        } else {
+            return response('Error', 404)
+            ->header('Content-Type', 'text/plain');
+        }
     }
 
     public function latest_order($id)
@@ -86,5 +93,10 @@ class OrderController extends Controller
     {
         $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
         return UserOrdersResource::collection($orders);
+    }
+
+    public function getOrderProducts($orderId){
+        $orderProducts = Order::find($orderId)->products;
+        return ProductResource::collection($orderProducts);
     }
 }
