@@ -18,15 +18,16 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('status', 'processing')->with('room','user','products')->paginate();
-        $returnedOrder=[];
-        foreach($orders as $order)
-        {
-            $totalPrice = $order->getTotalOrderPrice();
-            $newOrder = ["total_price"=>$totalPrice ,"order"=>$order];
-            array_push($returnedOrder,$newOrder);
-        }
-        return $returnedOrder;
+        $orders = Order::where('status', 'processing')->with('room','user','products')->paginate(2);
+        return OrderResource::collection($orders);
+        // $returnedOrder=[];
+        // foreach($orders as $order)
+        // {
+        //     $totalPrice = $order->getTotalOrderPrice();
+        //     $newOrder = ["total_price"=>$totalPrice ,"data"=>$order];
+        //     array_push($returnedOrder,$newOrder);
+        // }
+        // return $returnedOrder;
     }
 
     /**
