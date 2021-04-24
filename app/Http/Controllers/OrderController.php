@@ -8,19 +8,11 @@ use App\Models\User;
 use App\Models\OrderProduct;
 use App\Http\Resources\OrderPriceResource;
 use App\Http\Resources\OrderProductsResource;
+use App\Http\Resources\ProductResource;
+use App\Http\Resources\UserOrdersResource;
 
 class OrderController extends Controller
 {
-    public function inject_order($id, $products)
-    {
-        $order_products = array();
-        foreach ($products as $product) {
-            $product['order_id'] = $id;
-            $order_products[] = $product;
-        }
-        return $order_products;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -142,5 +134,17 @@ class OrderController extends Controller
     public function getOrderProducts($orderId){
         $orderProducts = Order::find($orderId)->products;
         return OrderProductsResource::collection($orderProducts);
+    }
+    
+    public function latest_order($id)
+    {
+        $order = Order::where('user_id',$id)->orderBy('created_at', 'DESC')->first();
+        return ProductResource::collection($order->products->take(5));
+    }
+
+    public function user_orders(Request $request,$id)
+    {
+        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
+        return UserOrdersResource::collection($orders);
     }
 }
