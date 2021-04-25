@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\OrderProduct;
 use App\Http\Resources\OrderPriceResource;
 use App\Http\Resources\OrderProductsResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserOrdersResource;
 
@@ -20,6 +21,16 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $orders = Order::where('status', 'processing')->with('room','user','products')->paginate(2);
+        return OrderResource::collection($orders);
+        // $returnedOrder=[];
+        // foreach($orders as $order)
+        // {
+        //     $totalPrice = $order->getTotalOrderPrice();
+        //     $newOrder = ["total_price"=>$totalPrice ,"data"=>$order];
+        //     array_push($returnedOrder,$newOrder);
+        // }
+        // return $returnedOrder;
     }
 
     /**
@@ -66,6 +77,10 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $order = Order::find($id);
+        $order->status = 'delivering';
+        $order->save();
+        return response()->json('order updated');
     }
 
     /**
