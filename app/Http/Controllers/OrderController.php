@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\OrderProduct;
 use App\Http\Resources\ProductResource;
+use App\Http\Resources\OrderProductsResource;
 use App\Http\Resources\UserOrdersResource;
 
 class OrderController extends Controller
@@ -91,12 +92,12 @@ class OrderController extends Controller
 
     public function user_orders(Request $request,$id)
     {
-        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
+        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->paginate(4);;
         return UserOrdersResource::collection($orders);
     }
 
     public function getOrderProducts($orderId){
         $orderProducts = Order::find($orderId)->products;
-        return ProductResource::collection($orderProducts);
+        return OrderProductsResource::collection($orderProducts);
     }
 }
