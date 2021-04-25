@@ -14,7 +14,7 @@ class AddRoomIdToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-         $table->foreignId('room_id')->constrained('rooms');
+         $table->foreignId('room_id')->nullable()->constrained('rooms');
         });
     }
 

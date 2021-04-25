@@ -48,3 +48,6 @@ Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
 Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 Route::post('/login', [App\Http\Controllers\LoginController::class,'login']);
 Route::post('/logout', [App\Http\Controllers\LoginController::class,'logout']);
+
+Route::get('/authorize/{provider}/redirect', [App\Http\Controllers\SocialAuthController::class,'redirectToProvider'])->name('api.social.redirect');
+Route::get('/authorize/{provider}/callback', [App\Http\Controllers\SocialAuthController::class,'handleProviderCallback'])->name('api.social.callback');
