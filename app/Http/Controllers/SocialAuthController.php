@@ -57,12 +57,11 @@ class SocialAuthController extends Controller
                 ]);
             }
         }
-        $passportToken = $appUser->CreateToken('login token')->plainTextToken;
+        $passportToken = $appUser->createToken('login token')->accessToken;
         //login our user and get the token
         return response()->json([
             'access_token' => $passportToken
         ]);
-        dd($user, $appUser, $passportToken);
     }
 
 }
