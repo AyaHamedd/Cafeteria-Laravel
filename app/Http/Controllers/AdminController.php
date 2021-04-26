@@ -16,8 +16,9 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    
     {
-       $users=User::paginate();
+       $users=User::paginate(2);
         // return response()->json( $rooms);
          return $users;
     }
