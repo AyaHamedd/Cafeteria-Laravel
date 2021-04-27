@@ -18,7 +18,8 @@ class AdminController extends Controller
     public function index()
     
     {
-       $users=User::paginate(2);
+       $users=User::where('is_admin','=',0)->paginate(2);
+    //    $users = User::where('is_admin', '=', 0)->paginate(3);
         // return response()->json( $rooms);
          return $users;
     }
@@ -46,28 +47,28 @@ class AdminController extends Controller
   
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => ['required'], 
-        //     'email' => ['required', 'email', 'unique:users'],
-        //     'password'=>['required', 'min:8', 'confirmed'],
-        //     'avatar' => ['required'],
-        //     'room_id' => ['required']
-        // ]);
-        //      User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password'=>Hash::make($request->password),
-        //     'avatar' => $request->avatar,
-        //     'room_id' => $request->room_id
-        // ]);
+        $request->validate([
+            'name' => ['required'], 
+            'email' => ['required', 'email', 'unique:users'],
+            'password'=>['required', 'min:8'],
+            'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
+             User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=>Hash::make($request->password),
+            'avatar' => $request->avatar,
+            'room_id' => $request->room_id
+        ]);
       
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password =Hash::make($request->password);
-        $user->avatar = $request->avatar;
-        $user->room_id=$request->room_id;
-        $user->save();
+        // $user = new User();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password =Hash::make($request->password);
+        // $user->avatar = $request->avatar;
+        // $user->room_id=$request->room_id;
+        // $user->save();
 // $input = $request->all();  
 // if ($image = $request->file('avatar')) {
 //     $destinationPath = 'storage/avatars/';
