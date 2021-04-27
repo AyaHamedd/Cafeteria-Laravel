@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\OrderProduct;
 use App\Http\Resources\OrderPriceResource;
 use App\Http\Resources\OrderProductsResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserOrdersResource;
 
@@ -20,6 +21,16 @@ class OrderController extends Controller
      */
     public function index()
     {
+        $orders = Order::where('status', 'processing')->with('room','user','products')->paginate(2);
+        return OrderResource::collection($orders);
+        // $returnedOrder=[];
+        // foreach($orders as $order)
+        // {
+        //     $totalPrice = $order->getTotalOrderPrice();
+        //     $newOrder = ["total_price"=>$totalPrice ,"data"=>$order];
+        //     array_push($returnedOrder,$newOrder);
+        // }
+        // return $returnedOrder;
     }
 
     /**
@@ -66,6 +77,10 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $order = Order::find($id);
+        $order->status = 'delivering';
+        $order->save();
+        return response()->json('order updated');
     }
 
     /**
@@ -76,7 +91,14 @@ class OrderController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroyedOrder = Order::find($id)->delete();
+        if ($destroyedOrder) {
+            return response('Order Deleted successfully', 200)
+                  ->header('Content-Type', 'text/plain');
+        } else {
+            return response('Error', 404)
+            ->header('Content-Type', 'text/plain');
+        }
     }
 
     public function orderPrice($id){
@@ -131,11 +153,6 @@ class OrderController extends Controller
         'order_price'=>$selectedUserOrders->getTotalOrderPrice()];
     }
 
-    public function getOrderProducts($orderId){
-        $orderProducts = Order::find($orderId)->products;
-        return OrderProductsResource::collection($orderProducts);
-    }
-    
     public function latest_order($id)
     {
         $order = Order::where('user_id',$id)->orderBy('created_at', 'DESC')->first();
@@ -144,7 +161,12 @@ class OrderController extends Controller
 
     public function user_orders(Request $request,$id)
     {
-        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->get();
+        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->paginate(4);;
         return UserOrdersResource::collection($orders);
+    }
+
+    public function getOrderProducts($orderId){
+        $orderProducts = Order::find($orderId)->products;
+        return OrderProductsResource::collection($orderProducts);
     }
 }
