@@ -85,11 +85,10 @@ class CategoyController extends Controller
         return response()->json(['status' => "Error", 'data' => "", "message" => "something went wrong"], 401);
     }
 
-    public function lookUp()
-    {
-        $categories = Category::all(['id', 'label']);
-        dump($categories);
-        return response()->json(['status' => "success", "data" => $categories], 200);
+    // public function lookUp()
+    // {
+    //     $categories = Category::all(['id', 'label']);
+    //     return response()->json(['status' => "success", "data" => $categories], 200);
 
-    }
+    // }
 }

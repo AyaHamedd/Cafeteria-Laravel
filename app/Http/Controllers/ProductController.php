@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Http\Resources\ProductResource;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -47,12 +48,13 @@ class ProductController extends Controller
                 $file = $request->file('image');
                 $name = 'products/' . uniqid() . '.' . $file->extension();
                 $file->storePubliclyAs('public', $name);
-                $product->image =  asset('storage/' . ($name));
+                // $product->image =  asset('storage/' . ($name));
             }
 
             $product->name = $request->name;
             $product->price = $request->price;
             $product->category_id = $request->category_id;
+            $product->image = $request->image;
             return $product->save() ?
                 response()->json(['status' => "success", 'data' => $product], 200) :
                 response()->json(['status' => "error", 'message' => 'request failed'], 403);
