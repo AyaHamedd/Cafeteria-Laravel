@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\Room; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -18,7 +19,8 @@ class AdminController extends Controller
     public function index()
     
     {
-       $users=User::where('is_admin','=',0)->paginate(2);
+       $users=User::where('is_admin','=',0)->with('room')->paginate(2);
+    //    dd($users);
     //    $users = User::where('is_admin', '=', 0)->paginate(3);
         // return response()->json( $rooms);
          return $users;
@@ -121,23 +123,22 @@ class AdminController extends Controller
  public function update($id, Request $req)
     {
 
-
+ $req->validate([
+            'name' => ['required'], 
+            'email' => ['required' ,'email'], 
+            'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
       
         $user = User::find($id);
-//     $input = $user->all();  
-// if ($image = $user->file('avatar')) {
-//     $destinationPath = 'storage/avatars/';
-//     $profileImage = 'storage/avatars/'.$user->file('avatar')->getClientOriginalName(); 
-//     $image->move($destinationPath, $profileImage);
-//     $input['avatar'] = "$profileImage";
-// }
+ 
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = $req->password;
         $user->avatar = $req->avatar;
         $user->room_id = $req->room_id;
         $user->save();
-        return response()->json('user updated');
+        // return response()->json('user updated');
     }
  
     /**
