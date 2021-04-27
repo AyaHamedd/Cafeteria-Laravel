@@ -51,6 +51,7 @@ class AdminController extends Controller
             'name' => ['required'], 
             'email' => ['required', 'email', 'unique:users'],
             'password'=>['required', 'min:8'],
+            'confirm_password'=>'required|same:password',
             'avatar' => ['required'],
             'room_id' => ['required']
         ]);
