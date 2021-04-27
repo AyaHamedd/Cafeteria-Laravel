@@ -67,7 +67,6 @@ class Order extends Model
 
     public function getCreatedAtAttribute()
     {
-        // return Carbon::parse($this->attributes['created_at'])->format('d-m-y H:i A');
         return Carbon::parse($this->attributes['created_at'])->format('Y-m-d H:i A');
     }
 }
