@@ -36,4 +36,10 @@ return [
         'redirect' => env('FRONT_APP') . '/authorize/facebook/callback',
     ],
 
+    'google' => [
+        'client_id' => env('GOOGLE_CLIENT_ID'),
+        'client_secret' => env('GOOGLE_CLIENT_SECRET'),
+        'redirect' => env('FRONT_APP') . '/authorize/google/callback',
+    ],
+
 ];
