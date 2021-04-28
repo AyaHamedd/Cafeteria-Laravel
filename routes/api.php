@@ -20,7 +20,7 @@ use App\Http\Controllers\UserController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 // Route::Resource('pages', 'App\Http\Controllers\AdminController');
@@ -52,3 +52,9 @@ Route::apiResource('/rooms', App\Http\Controllers\RoomController::class);
 Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 Route::post('/login', [App\Http\Controllers\LoginController::class,'login']);
 Route::post('/logout', [App\Http\Controllers\LoginController::class,'logout']);
+Route::post('/forgot-password', [App\Http\Controllers\ForgotPasswordController::class,'sendResetLinkEmail'])->name('api.forgot-password');;
+Route::post('/reset-password', [App\Http\Controllers\ResetPasswordController::class,'reset'])->name('api.reset-password');;
+
+
+Route::get('/authorize/{provider}/redirect', [App\Http\Controllers\SocialAuthController::class,'redirectToProvider'])->name('api.social.redirect');
+Route::get('/authorize/{provider}/callback', [App\Http\Controllers\SocialAuthController::class,'handleProviderCallback'])->name('api.social.callback');

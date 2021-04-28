@@ -21,16 +21,8 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('status', 'processing')->with('room','user','products')->paginate(2);
+        $orders = Order::where('status', 'processing')->with('room','user','products')->orderBy('created_at', 'DESC')->paginate(2);
         return OrderResource::collection($orders);
-        // $returnedOrder=[];
-        // foreach($orders as $order)
-        // {
-        //     $totalPrice = $order->getTotalOrderPrice();
-        //     $newOrder = ["total_price"=>$totalPrice ,"data"=>$order];
-        //     array_push($returnedOrder,$newOrder);
-        // }
-        // return $returnedOrder;
     }
 
     /**
@@ -161,7 +153,7 @@ class OrderController extends Controller
 
     public function user_orders(Request $request,$id)
     {
-        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->paginate(4);;
+        $orders = Order::where('user_id',$id)->where('created_at','>',$request->from)->where('created_at','<',$request->to)->orderBy('created_at', 'DESC')->paginate(4);;
         return UserOrdersResource::collection($orders);
     }
 

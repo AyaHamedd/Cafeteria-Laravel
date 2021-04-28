@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Http\Request;
 use App\Models\User; 
+use App\Models\Room; 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -16,8 +17,11 @@ class AdminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
+    
     {
-       $users=User::paginate();
+       $users=User::where('is_admin','=',0)->with('room')->paginate(2);
+    //    dd($users);
+    //    $users = User::where('is_admin', '=', 0)->paginate(3);
         // return response()->json( $rooms);
          return $users;
     }
@@ -45,28 +49,29 @@ class AdminController extends Controller
   
     public function store(Request $request)
     {
-        // $request->validate([
-        //     'name' => ['required'], 
-        //     'email' => ['required', 'email', 'unique:users'],
-        //     'password'=>['required', 'min:8', 'confirmed'],
-        //     'avatar' => ['required'],
-        //     'room_id' => ['required']
-        // ]);
-        //      User::create([
-        //     'name' => $request->name,
-        //     'email' => $request->email,
-        //     'password'=>Hash::make($request->password),
-        //     'avatar' => $request->avatar,
-        //     'room_id' => $request->room_id
-        // ]);
+        $request->validate([
+            'name' => ['required'], 
+            'email' => ['required', 'email', 'unique:users'],
+            'password'=>['required', 'min:8'],
+            'confirm_password'=>'required|same:password',
+            'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
+             User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password'=>Hash::make($request->password),
+            'avatar' => $request->avatar,
+            'room_id' => $request->room_id
+        ]);
       
-        $user = new User();
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password =Hash::make($request->password);
-        $user->avatar = $request->avatar;
-        $user->room_id=$request->room_id;
-        $user->save();
+        // $user = new User();
+        // $user->name = $request->name;
+        // $user->email = $request->email;
+        // $user->password =Hash::make($request->password);
+        // $user->avatar = $request->avatar;
+        // $user->room_id=$request->room_id;
+        // $user->save();
 // $input = $request->all();  
 // if ($image = $request->file('avatar')) {
 //     $destinationPath = 'storage/avatars/';
@@ -118,23 +123,22 @@ class AdminController extends Controller
  public function update($id, Request $req)
     {
 
-
+ $req->validate([
+            'name' => ['required'], 
+            'email' => ['required' ,'email'], 
+            'avatar' => ['required'],
+            'room_id' => ['required']
+        ]);
       
         $user = User::find($id);
-//     $input = $user->all();  
-// if ($image = $user->file('avatar')) {
-//     $destinationPath = 'storage/avatars/';
-//     $profileImage = 'storage/avatars/'.$user->file('avatar')->getClientOriginalName(); 
-//     $image->move($destinationPath, $profileImage);
-//     $input['avatar'] = "$profileImage";
-// }
+ 
         $user->name = $req->name;
         $user->email = $req->email;
         $user->password = $req->password;
         $user->avatar = $req->avatar;
         $user->room_id = $req->room_id;
         $user->save();
-        return response()->json('user updated');
+        // return response()->json('user updated');
     }
  
     /**

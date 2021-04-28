@@ -18,13 +18,21 @@ class RegisterController extends Controller
             'room_id' => ['required']
         ]);
 
-        User::create([
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password'=>Hash::make($request->password),
             'room_id' => $request->room_id,
             'avatar' => $request->avatar
         ]);
+
+        return $user;
+
+        if(!$user){
+            return response()->json(["success"=>false, "message"=> "Registration failed"], 500);
+        }
+
+        return response()->json(["success"=>true, "message"=> "Registration succeeded"]);
 
     }
 }
