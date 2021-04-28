@@ -17,7 +17,7 @@ class UserOrdersResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "created_at" => Carbon::parse($this->created_at)->format('d-m-y H:i A'),
+            "created_at" => $this->getCreatedAtAttribute(),
             "status" => $this->status,
             "total" => $this->getTotalOrderPrice()
         ];
