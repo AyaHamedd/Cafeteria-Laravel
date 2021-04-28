@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\OrderProduct;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\OrderPriceResource;
 use App\Http\Resources\OrderProductsResource;
-use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
 use App\Http\Resources\UserOrdersResource;
 

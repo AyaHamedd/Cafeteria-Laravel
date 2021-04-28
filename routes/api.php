@@ -30,7 +30,10 @@ Route::post('upload', [App\Http\Controllers\ImageController::class,'upload']);
 // Route::resource('rooms', App\Http\Controllers\RoomController::class); 
 Route::post('/upload', [App\Http\Controllers\ImageController::class, 'upload'])->name('upload');
 Route::apiResource("/products",ProductController::class);
-
+Route::get("/allproducts", [ProductController::class,'allProducts']);
+Route::patch("/allproducts/{id}", [ProductController::class,'editAvailability']);
+Route::apiResource('/categories', App\Http\Controllers\CategoyController::class);
+// Route::get('categoryLookup', [\App\Http\Controllers\CategoyController::class, 'lookUp']);
 Route::apiResource("/orders",OrderController::class);
 Route::get("/orders/price/{order}", [OrderController::class,'orderPrice']);
 Route::post("/orders/search-users", [OrderController::class,'searchOrderUsersByDate']);
