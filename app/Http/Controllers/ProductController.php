@@ -85,9 +85,17 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function editAvailability(Request $request,$id)
     {
         //
+        $product = Product::find($id);
+        $product->is_available = ! $request->is_available;
+        // $product->is_available = $request['is_available'] != null ? $request->is_available  : $product->is_available;
+        // $product->save();
+        // return $request;
+        return $product->update() ?
+                response()->json(["status" => "success", "data" => $product], 200) :
+                response()->json(['status' => "error", "message" => "request failed"], 403);
     }
 
     /**
