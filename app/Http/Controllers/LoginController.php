@@ -34,18 +34,6 @@ class LoginController extends Controller
         if(!empty($tokenContent['access_token'])){
             return $tokenResponse;
         }
-        return response()->json([
-            'message'=>'Unautheticated'
-        ]);
-
-        if(Auth::attempt($request->only('email', 'password'))){
-            $user = Auth::user();
-            $token = $user->CreateToken('token')->plainTextToken;
-            $cookie = \cookie('jwt', $token, 60*24);
-            return \response([
-                'jwt'=>$token
-            ])->withCookie($cookie);
-        }
 
         throw ValidationException::withMessages([
             'email' => ['Credentials are incorrect.']

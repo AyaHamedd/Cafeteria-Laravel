@@ -43,6 +43,9 @@
 
 ## Demo
 
+### Login using social accounts.
+![alt text](https://github.com/HebaMostafa123/Cafeteria-Vue/blob/feat-readme/demo/login.png)
+
 ### Create new order.
 ![alt text](https://github.com/HebaMostafa123/Cafeteria-Vue/blob/feat-readme/demo/newOrder.gif)
 
