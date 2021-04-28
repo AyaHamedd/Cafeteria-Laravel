@@ -3,11 +3,6 @@
 ![alt text](https://github.com/HebaMostafa123/Cafeteria-Vue/blob/feat-readme/demo/landingPage.png)
 
  **ITI-Cafetria** is a simple application that allows ITI students to order food and drinks from the cafeteria without having to go all the way to the cafeteria, using an online interface to choose available products and make orders! Moreover, It allows cafetria administration to respond to their orders and control products. The project is developed using  **Laravel**,  **Vue.js** frameworks and  **MySQL** database.
-
----
-
-## Deployment
-
 ---
 
 ## Table of Contents
