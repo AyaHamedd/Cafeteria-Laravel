@@ -16,8 +16,14 @@ class ProductController extends Controller
      */
     public function index()
     {
+        // return "ddddddd";
         $products=Product::where('is_available', 1)->paginate();
         return ProductResource::collection($products);
+    }
+    public function allProducts()
+    {
+        $products=Product::paginate(5);
+        return ($products);
     }
 
     /**
@@ -91,8 +97,10 @@ class ProductController extends Controller
      * @param  \App\Models\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $product)
+    public function update(Request $request, $id)
     {
+        $product = Product::find($id);
+        // return $request;
         $validator = Validator::make($request->all(), [
             'name' => 'string|min:3',
             'price' => 'integer|min:3',
@@ -111,12 +119,21 @@ class ProductController extends Controller
                 $file->storePubliclyAs('public', $name);
                 $product->image =  asset('storage/' . ($name));
             }
-            $product->name = $request->name ? $request->name : $product->name;
-            $product->price = $request->price ? $request->price : $product->price;
-            $product->is_available = $request['is_available'] != null ? $request->is_available  : $product->is_available;
-            return $product->update() ?
-                response()->json(["status" => "success", "data" => $product], 200) :
-                response()->json(['status' => "error", "message" => "request failed"], 403);
+            
+            $product->name = $request->name;
+            $product->price = $request->price;
+            $product->is_available = $request->is_available;
+            $product->image = $request->image;
+            $product->category_id = $request->category_id;
+            $product->save();
+            // return response()->json('user updated');
+            
+            // $product->name = $request->name ? $request->name : $product->name;
+            // $product->price = $request->price ? $request->price : $product->price;
+            // $product->is_available = $request['is_available'] != null ? $request->is_available  : $product->is_available;
+            // return $product->update() ?
+            //     response()->json(["status" => "success", "data" => $product], 200) :
+            //     response()->json(['status' => "error", "message" => "request failed"], 403);
         }
     }
 
